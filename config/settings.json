@@ -1,0 +1,19 @@
+{
+    "scraping": {
+        "interval_hours": 8,
+        "max_chapters_per_manga": 1,
+        "num_recommendations_per_genre": 5,
+        "grab_all_chapters_favorites": false
+    },
+    "websites": [
+        {
+            "name": "mangaread",
+            "url": "https://www.mangaread.org/",
+            "enabled": true
+        }
+    ],
+    "ai_scraper": {
+        "enabled": false,
+        "api_key": ""
+    }
+}

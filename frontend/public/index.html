@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaReader - Read Manga & Manhwa</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for star icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="min-h-screen bg-gray-900 text-gray-100">
+
+    <div id="app-container" class="min-h-screen">
+        <!-- Loading Spinner -->
+        <div id="loading-spinner" class="min-h-screen flex items-center justify-center text-2xl">
+            <div class="flex items-center space-x-3">
+                <svg class="animate-spin h-8 w-8 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Loading manga data...</span>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="bg-gray-800 p-4 shadow-lg sticky top-0 z-10 hidden" id="main-navigation">
+            <div class="container mx-auto flex justify-center space-x-4">
+                <button id="nav-all-titles" class="nav-button py-2 px-6 rounded-full text-lg font-semibold transition-colors duration-200 bg-blue-600 text-white">
+                    All Titles
+                </button>
+                <button id="nav-favorites" class="nav-button py-2 px-6 rounded-full text-lg font-semibold transition-colors duration-200 bg-gray-700 hover:bg-gray-600 text-gray-300">
+                    Favorites
+                </button>
+                <button id="nav-recommendations" class="nav-button py-2 px-6 rounded-full text-lg font-semibold transition-colors duration-200 bg-gray-700 hover:bg-gray-600 text-gray-300">
+                    Recommendations
+                </button>
+            </div>
+        </nav>
+
+        <!-- Home Page Section -->
+        <div id="home-page" class="page-section container mx-auto px-4 py-8">
+            <header class="mb-12 text-center">
+                <h1 class="text-5xl font-extrabold text-blue-400 mb-4 drop-shadow-lg">
+                    All Titles
+                </h1>
+                <p class="text-xl text-gray-300">Explore our vast collection of manga and manhwa.</p>
+                <div class="mt-8 flex justify-center">
+                    <input
+                        type="text"
+                        placeholder="Search for your favorite manga..."
+                        class="w-full max-w-md p-3 rounded-full bg-gray-800 border border-gray-700 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
+                    />
+                </div>
+            </header>
+            <section>
+                <div id="manga-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <!-- Manga cards will be injected here by JavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Favorites Page Section -->
+        <div id="favorites-page" class="page-section container mx-auto px-4 py-8">
+            <header class="mb-12 text-center">
+                <h1 class="text-5xl font-extrabold text-pink-400 mb-4 drop-shadow-lg">
+                    My Favorites
+                </h1>
+                <p class="text-xl text-gray-300">Manga and manhwa you've favorited.</p>
+            </header>
+            <section>
+                <div id="favorites-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <!-- Favorite manga cards will be injected here by JavaScript -->
+                </div>
+                <p id="no-favorites-message" class="text-center text-gray-400 text-lg mt-8 hidden">
+                    No favorites added yet. Browse "All Titles" to add some!
+                </p>
+            </section>
+        </div>
+
+        <!-- Recommendations Page Section -->
+        <div id="recommendations-page" class="page-section container mx-auto px-4 py-8">
+            <header class="mb-12 text-center">
+                <h1 class="text-5xl font-extrabold text-green-400 mb-4 drop-shadow-lg">
+                    Recommendations
+                </h1>
+                <p class="text-xl text-gray-300">Discover new stories you might love!</p>
+            </header>
+            <section>
+                <div id="recommendations-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <!-- Recommended manga cards will be injected here by JavaScript -->
+                </div>
+            </section>
+        </div>
+
+        <!-- Chapter List Page Section -->
+        <div id="chapters-page" class="page-section container mx-auto px-4 py-8">
+            <button id="back-to-previous-btn" class="mb-6 flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-300 focus:outline-none">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 mr-2"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+                Back
+            </button>
+            <div id="manga-details" class="flex flex-col md:flex-row items-center md:items-start bg-gray-800 rounded-xl shadow-lg p-6 mb-10">
+                <!-- Manga details will be injected here -->
+            </div>
+            <section>
+                <h3 class="text-3xl font-bold text-gray-100 mb-6 text-center">Chapters</h3>
+                <ul id="chapter-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Chapters will be injected here -->
+                </ul>
+            </section>
+        </div>
+
+        <!-- Reader Page Section -->
+        <div id="reader-page" class="page-section container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-6 flex-wrap gap-2">
+                <button id="back-to-chapters-btn" class="flex items-center text-blue-400 hover:text-blue-300 transition-colors duration-300 focus:outline-none py-2 px-3 rounded-full bg-gray-800">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-5 w-5 mr-2"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                    >
+                        <path
+                            fill-rule="evenodd"
+                            d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                            clip-rule="evenodd"
+                        />
+                    </svg>
+                    Back to Chapters
+                </button>
+                <h2 id="reader-title" class="text-2xl font-bold text-gray-50 text-center flex-grow mx-4"></h2>
+                <div class="flex space-x-2">
+                    <button id="single-page-mode-btn" class="py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-200 bg-blue-600 text-white shadow-md">
+                        Single Page
+                    </button>
+                    <button id="all-pages-mode-btn" class="py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-200 bg-gray-700 hover:bg-gray-600 text-gray-300">
+                        All Pages
+                    </button>
+                    <button id="download-chapter-btn" class="py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-200 bg-green-600 text-white hover:bg-green-700 shadow-md">
+                        Download Chapter
+                    </button>
+                </div>
+            </div>
+
+            <div id="download-message" class="hidden mb-4 p-3 rounded-lg text-center text-white"></div>
+
+            <div id="chapter-image-display" class="bg-gray-800 rounded-xl shadow-lg p-4 flex justify-center items-center overflow-hidden mb-6">
+                <!-- Chapter images will be injected here -->
+            </div>
+
+            <div id="single-page-controls" class="flex justify-center items-center space-x-4 mb-6">
+                <button id="prev-page-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+                    Prev Page
+                </button>
+                <span id="page-counter" class="text-gray-300 text-lg"></span>
+                <button id="next-page-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75">
+                    Next Page
+                </button>
+            </div>
+
+            <div class="flex justify-center space-x-4">
+                <button id="prev-chapter-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 focus:outline-none">
+                    Previous Chapter
+                </button>
+                <button id="next-chapter-btn" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 focus:outline-none">
+                    Next Chapter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

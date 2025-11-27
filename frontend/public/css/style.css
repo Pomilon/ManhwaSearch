@@ -1,0 +1,34 @@
+/* Custom scrollbar for better aesthetics */
+.scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+    background: #1a202c; /* gray-900 */
+    border-radius: 10px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: #4a5568; /* gray-700 */
+    border-radius: 10px;
+    border: 2px solid #1a202c; /* gray-900 */
+}
+
+/* Set a default font */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Hide pages by default */
+.page-section {
+    display: none;
+}
+
+/* Style for chapters that have images available */
+.chapter-available {
+    background-color: #3f51b5; /* A darker blue, indicating availability */
+    color: #ffffff;
+}
+.chapter-available:hover {
+    background-color: #303f9f; /* Darker on hover */
+}

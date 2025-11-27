@@ -1,0 +1,10 @@
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+env/
+venv/
+.env
+.DS_Store
+frontend/public/scraped_manga_data*.json
+frontend/public/favorites.json
