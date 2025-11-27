@@ -16,82 +16,96 @@ ManhwaSearch is a self-hosted web application for scraping, managing, and readin
 ## Project Structure
 
 ```
+
 ManhwaSearch/
-├── backend/                # Python Flask Backend
-│   ├── app.py              # Main application entry point & API routes
-│   ├── scheduler.py        # Background task scheduler
-│   ├── config_loader.py    # Configuration management
-│   ├── scraper/            # Scraper modules
-│   │   ├── base.py         # Abstract base class for scrapers
-│   │   ├── mangaread.py    # Implementation for mangaread.org
-│   │   └── ai_scraper.py   # Experimental AI scraper
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # Node.js Express Frontend
-│   ├── server.js           # Express server & API proxy
-│   ├── package.json        # Node.js dependencies
-│   └── public/             # Static assets
-│       ├── index.html      # Main HTML file
-│       ├── css/            # Stylesheets
-│       ├── js/             # Frontend logic (app.js)
-│       └── scraped_data... # Data storage (JSON)
+├── backend/                \# Python Flask Backend
+│   ├── app.py              \# Main application entry point & API routes
+│   ├── scheduler.py        \# Background task scheduler
+│   ├── Dockerfile          \# Backend container definition
+│   └── ...
+├── frontend/               \# Node.js Express Frontend
+│   ├── server.js           \# Express server & API proxy
+│   ├── Dockerfile          \# Frontend container definition
+│   └── public/             \# Static assets
 └── config/
-    └── settings.json       # Application settings
-```
+└── settings.json       \# Application settings
+├── docker-compose.yml      \# Orchestration for full-stack deployment
+
+````
 
 ## Prerequisites
 
--   **Python 3.8+**
--   **Node.js 14+** & **npm**
+-   **Docker & Docker Compose** (Recommended)
+-   *Or for manual setup:*
+    -   **Python 3.8+**
+    -   **Node.js 14+** & **npm**
 
-## Installation
+---
 
-### 1. Backend Setup
+## Installation & Running
 
+### Option 1: Docker (Recommended)
+
+The easiest way to run ManhwaSearch is using Docker Compose, which sets up the database, backend, and frontend networking automatically.
+
+1.  **Start the Application**:
+    Run the following command in the project root:
+    ```bash
+    docker-compose up -d
+    ```
+
+2.  **Access the App**:
+    -   **Frontend**: Open [http://localhost:3000](http://localhost:3000) in your browser.
+    -   **Backend API**: Running on `http://localhost:5000` (handled internally).
+
+3.  **Stop the Application**:
+    ```bash
+    docker-compose down
+    ```
+
+### Option 2: Manual Setup
+
+If you prefer running without Docker, follow these steps:
+
+#### 1. Backend Setup
 Navigate to the `backend` directory and install the required Python packages:
 
 ```bash
 cd backend
 pip install -r requirements.txt
-```
+````
 
-### 2. Frontend Setup
-
-Navigate to the `frontend` directory and install the required Node.js packages:
-
-```bash
-cd frontend
-npm install
-```
-
-## Running the Application
-
-For the application to function correctly, both the backend and frontend servers must be running.
-
-### 1. Start the Backend
-
-In a terminal, navigate to the project root or `backend` directory and run:
+Start the backend server:
 
 ```bash
 # From project root
 python backend/app.py
 ```
 
-The backend API will start on `http://127.0.0.1:5000`.
+*The backend API will start on `http://127.0.0.1:5000`.*
 
-### 2. Start the Frontend
+#### 2\. Frontend Setup
 
-In a separate terminal, navigate to the `frontend` directory and run:
+In a separate terminal, navigate to the `frontend` directory and install dependencies:
 
 ```bash
 cd frontend
+npm install
+```
+
+Start the frontend server:
+
+```bash
 node server.js
 ```
 
-The frontend will be accessible at `http://localhost:3000`.
+*The frontend will be accessible at `http://localhost:3000`.*
+
+-----
 
 ## Configuration
 
-The application is configured via `config/settings.json`.
+The application is configured via `config/settings.json`. These settings persist even when running in Docker (via volume mapping).
 
 ```json
 {
@@ -104,7 +118,7 @@ The application is configured via `config/settings.json`.
     "websites": [
         {
             "name": "mangaread",
-            "url": "https://www.mangaread.org/",
+            "url": "[https://www.mangaread.org/](https://www.mangaread.org/)",
             "enabled": true
         }
     ],
@@ -128,15 +142,14 @@ The application is configured via `config/settings.json`.
 2.  **Reading**: Click "View Chapters" on any card. Select a chapter to read.
 3.  **Favorites**: Click the star icon on any manga card to add it to your favorites. The scheduler prioritizes updates for these titles.
 4.  **Manual Scraping**:
-    -   **Full Manga**: On the manga details page, click "Scrape All Chapters" to queue a full update.
-    -   **Specific Chapter**: In the chapter list, click the "Scrape" button next to a chapter to fetch its images immediately.
-    -   **View Original**: Click the "View Original" button or the external link icon to visit the source website.
+      - **Full Manga**: On the manga details page, click "Scrape All Chapters" to queue a full update.
+      - **Specific Chapter**: In the chapter list, click the "Scrape" button next to a chapter to fetch its images immediately.
 
 ## Troubleshooting
 
--   **Images not loading**: Some websites block hotlinking. Ensure the backend has successfully scraped the images (check console logs).
--   **Scraper not running**: Check `backend/app.py` output logs. Ensure `interval_hours` in `settings.json` is reasonable.
--   **Port Conflicts**: Ensure ports 5000 (backend) and 3000 (frontend) are free.
+  - **Docker Issues**: If the containers fail to start, check the logs with `docker-compose logs -f`.
+  - **Images not loading**: Some websites block hotlinking. Ensure the backend has successfully scraped the images (check console logs).
+  - **Port Conflicts**: Ensure ports 5000 (backend) and 3000 (frontend) are free on your host machine.
 
 ## License
 
