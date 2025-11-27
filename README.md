@@ -1,6 +1,6 @@
 # ManhwaSearch - Manga Scraper & Reader
 
-ManhwaSearch is a self-hosted web application for scraping, managing, and reading manga and manhwa. It features a modern, responsive Single Page Application (SPA) frontend and a robust Python backend with a background scheduler for automated updates.
+ManhwaSearch is a self-hosted web application for scraping, managing, and reading manga and manhwa. It features a modern, responsive Single Page Application (SPA) frontend and a Python backend with a background scheduler for automated updates.
 
 ## Features
 
