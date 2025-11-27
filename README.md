@@ -118,7 +118,7 @@ The application is configured via `config/settings.json`. These settings persist
     "websites": [
         {
             "name": "mangaread",
-            "url": "[https://www.mangaread.org/](https://www.mangaread.org/)",
+            "url": "https://www.mangaread.org/",
             "enabled": true
         }
     ],
