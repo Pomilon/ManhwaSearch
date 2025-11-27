@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: manhwa-backend
+    volumes:
+      # Persist configuration
+      - ./config:/app/config
+      # Share scraped data with frontend (assuming backend writes here)
+      - manhwa_data:/app/frontend/public/scraped_data
+    ports:
+      - "5000:5000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: manhwa-frontend
+    depends_on:
+      - backend
+    volumes:
+      # access the data scraped by the backend
+      - manhwa_data:/app/public/scraped_data
+    ports:
+      - "3000:3000"
+    environment:
+      # If your frontend proxies API calls, tell it where backend is
+      - API_URL=http://backend:5000
+    restart: unless-stopped
+
+volumes:
+  manhwa_data:
